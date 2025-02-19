@@ -7,10 +7,9 @@
 @section('breadcrumb', 'Dashboard')
 
 @section('content')
-<!-- Kotak Informasi Utama -->
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Selamat Datang di Dashboard</h3>
+    <h3 class="card-title">Selamat Datang di Halaman Cast</h3> 
 
     <div class="card-tools">
       <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Sembunyikan">
@@ -22,13 +21,37 @@
     </div>
   </div>
   <div class="card-body">
-    Selamat datang! Anda dapat mulai membuat aplikasi yang luar biasa di sini. Jelajahi fitur-fitur yang tersedia dan manfaatkan semua alat yang ada untuk meningkatkan produktivitas Anda.
+    <a href="{{ route('cast.create') }}" class="btn btn-primary mb-3">Tambah Cast</a>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nama</th>
+          <th>Umur</th>
+          <th>Bio</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($casts as $cast)
+        <tr>
+          <td>{{ $cast->id }}</td>
+          <td>{{ $cast->name }}</td>
+          <td>{{ $cast->age }}</td>
+          <td>{{ $cast->bio }}</td>
+          <td>
+            <a href="{{ route('cast.show', $cast->id) }}" class="btn btn-info btn-sm">Detail</a>
+            <a href="{{ route('cast.edit', $cast->id) }}" class="btn btn-warning btn-sm">Edit</a>
+            <form action="{{ route('cast.destroy', $cast->id) }}" method="POST" class="d-inline">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+            </form>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
   </div>
-  <!-- /.card-body -->
-  <div class="card-footer">
-    Terima kasih telah menggunakan aplikasi kami. Jika Anda memiliki pertanyaan, jangan ragu untuk menghubungi tim dukungan kami.
-  </div>
-  <!-- /.card-footer-->
 </div>
-<!-- /.card -->
 @endsection
